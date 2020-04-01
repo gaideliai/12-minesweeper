@@ -6,3 +6,68 @@ body * {
     box-sizing: border-box;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+.minesweeper {
+    display: inline-block;
+    min-width: 180px;
+    width: 310px;
+    border: 5px solid #BDBDBD;
+    background-color: #eee;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+    .minesweeper > .header {
+        display: inline-block;
+        float: left;
+        width: 100%;
+        padding: 5px;
+        border-bottom: 5px solid #BDBDBD;
+    }
+        .minesweeper > .header > .counter {
+            display: inline-block;
+            float: left;
+            width: 60px;
+            padding: 0 2px;
+            background-color: #222;
+            color: #f00;
+            font-size: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+        .minesweeper > .header > .smile {
+            display: inline-block;
+            float: left;
+            width: 30px;
+            height: 30px;
+            margin: 0 calc(50% - 75px);
+            line-height: 24px;
+            font-size: 24px;
+            text-align: center;
+            transform: rotate(90deg);
+            background-color: #ccc;
+            box-shadow: 0 0 2px #777;
+        }
+        .minesweeper > .header > .counter.timer {
+            float: right;
+        }
+
+    .minesweeper > .field {
+        display: inline-block;
+        float: left;
+        width: 100%;
+    }
+        .minesweeper > .field > .cell {
+            display: inline-block;
+            float: left;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #555;
+            text-align: center;
+            font-size: 24px;
+            line-height: 30px;
+        }
+            .minesweeper > .field > .cell:hover {
+                background-color: #bbb;
+                cursor: pointer;
+            }
