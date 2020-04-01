@@ -13,6 +13,8 @@ Lentos dydis:
 - laikrodžio pradinė reikšmė: 0s
 - max laikrodžio reikšmė: 999s
 - paspaudus ant langelio:
+    - jei tai pirmas kartas:
+        - sugeneruojame bombas
     - atidaromas langelis
     - patikriname ar jame nėra bombos
         - jei yra: GAME OVER
