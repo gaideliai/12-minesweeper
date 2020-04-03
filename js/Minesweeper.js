@@ -1,7 +1,10 @@
+import Cell from './Cell.js';
+
 class Minesweeper {
     constructor (target, width, height, bombsPercentage) {
         this.target = target;
         this.DOM = null;
+        this.DOMfield = null;        
         this.width = width;
         this.height = height;
         this.bombsPercentage = bombsPercentage;
@@ -51,32 +54,21 @@ class Minesweeper {
         }
     }
 
-    render () {
-        let cellHTML = '';
-        for (let i=0; i<this.width * this.height; i++){
-            cellHTML += `<div class="cell">${i}</div>`;
-        }
-
+    render () {        
         let HTML = `<div class="header">
-                        <div class="counter bombs">${this.bombsCount}</div>
+                        <div class="counter bombs">099</div>
                         <div class="smile">:)</div>
                         <div class="counter timer">000</div>
                     </div>
-                    <div class="field">
-                        ${cellHTML}
-                    </div>`;
+                    <div class="field"></div>`;
         this.DOM.classList.add('minesweeper');
         this.DOM.innerHTML = HTML;
+        this.DOMfield = this.DOM.querySelector('.field');
 
-        const cells = this.DOM.querySelectorAll('.cell');
-        for (let i=0; i<cells.length; i++){
-            cells[i].addEventListener( 'click', (e) => this.cellClick(e) );
+        
+        for (let i=0; i<this.width * this.length; i++){
+            new Cell(i, this.DOMfield);
         }
-        
-    }
-        
-    cellClick (event) {
-        console.log(event.target.innerText, this.target, this.bombsPercentage);
     }
 }
 
