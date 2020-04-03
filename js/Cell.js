@@ -4,6 +4,7 @@ class Cell {
         this.parent = parent;
         this.parentDOM = parent.DOMfield;
         this.DOM = null;
+        this.hasBomb = false;
        
         this.init();
     }
@@ -19,6 +20,11 @@ class Cell {
 
     click( event ) {
         this.parent.checkCell(this.index);
+    }
+    
+    addBomb () {
+        this.hasBomb = true;
+        //this.DOM.innerText = 'B';
     }
 }
 

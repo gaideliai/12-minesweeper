@@ -72,48 +72,29 @@ class Minesweeper {
         }
     }
 
-    createBombs( cellIndex ) {
-        console.log('CREATING BOMBS... except for '+cellIndex);
-        console.log('wanted bombs count: '+this.bombsCount);
+    createBombs( cellIndex ) {        
         let list = [];
-        let counter = 0;
-
-        // for ( let i=0; i<this.bombsCount; i++ ) {
-        //     const position = Math.floor( Math.random() * this.width * this.height );
-        //     if ( list.indexOf(position) === -1 && position !== cellIndex ) {
-        //         list.push( position );
-        //     } else {
-        //         // neuzskaitome ciklo iteracijos kaip sekmingos, tad finale, kartojame dar karta
-        //         i--;
-        //     }
-        // }
-
+        
         while ( list.length < this.bombsCount ) {
-            counter++;
             const position = Math.floor( Math.random() * this.width * this.height );
 
             if ( list.indexOf(position) === -1 && position !== cellIndex ) {
                 list.push( position );
+                this.cells[position].addBomb();
             }
-        }
-
-        console.log('reikejo:', this.bombsCount, 'bet sukosi:', counter);
-
-        console.log(list);
+        }        
     }
 
     checkCell( cellIndex ) {
         console.log('cell: '+cellIndex);
         
         if ( this.clickCount === 0 ) {
-            this.createBombs( cellIndex );
+            this.createBombs( cellIndex );            
         }
         this.clickCount++;
     }
 }
 
-// const game = new Minesweeper('#game', 10, 10, 15);
-const game = new Minesweeper('#game', 10, 10, 80);
-// const game = new Minesweeper('#game', 10, 1, 99);
+const game = new Minesweeper('#game', 10, 10, 15);
 
 console.log(game);
