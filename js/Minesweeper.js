@@ -82,7 +82,9 @@ class Minesweeper {
         this.timer = new Timer(this.DOMheader, this);
 
         for ( let i=0; i<this.width * this.height; i++ ) {
-            this.cells.push ( new Cell(i, this) );
+            const x = i % this.width;
+            const y = (i - x)/ this.width;
+            this.cells.push ( new Cell(i, x, y, this) );
         }
     }
 
@@ -114,20 +116,59 @@ class Minesweeper {
 
         //atidaromas paspaustas langelis
         if ( this.cells[cellIndex].hasBomb ) {
-            //jei langelyje bomba
-                //game over
-                this.gameOver();
-        } else {            
-            //jei bombos nera, tai:
-                //tikriname aplinkinius langelius ir ksiaciuojame, kiek yra aplinkui bombu
-                    //jei bombu yra 0, tai
-                        //tesiame tikrinima aplinkiniuose langeliuose
-                    //jei bombu daugiau nei 0, tai
-                        //atvaizduojame langelyje bombu skaiciu
+            //game over
+            this.gameOver();
+        } else {
+            //tikriname aplinkinius langelius ir skaiciuojame, kiek yra aplinkui bombu
+            const surroundingBombs = this.calcSurroundingBombs(cellIndex);
+            if (surroundingBombs === 0) {
+                
+                //tesiame tikrinima aplinkiniuose langeliuose
+            } else {
+                //atvaizduojame langelyje bombu skaiciu
+                this.cells[cellIndex].showNumber(surroundingBombs);
+            }
+
+            //jei tai paskutine cele be bombos
+                //WIN
         }
     }
 
-    gameOver (){
+    calcSurroundingBombs (cellIndex) {
+        let count = 0;
+        const currentCell = this.cells[cellIndex];
+        const x = currentCell.x;
+        const y = currentCell.y;
+
+        // top left
+        if ( x > 0 && y > 0 &&
+             this.cells[cellIndex - this.width - 1].hasBomb ) count++;
+        // top center
+        if ( y > 0 &&
+             this.cells[cellIndex - this.width].hasBomb ) count++;
+        // top right
+        if ( x < this.width - 1 && y > 0 &&
+             this.cells[cellIndex - this.width + 1].hasBomb ) count++;
+        // middle left
+        if ( x > 0 &&
+             this.cells[cellIndex - 1].hasBomb ) count++;
+        // middle right
+        if ( x < this.width - 1 &&
+             this.cells[cellIndex + 1].hasBomb ) count++;
+        // bottom left
+        if ( x > 0 && y < this.height - 1 &&
+             this.cells[cellIndex + this.width - 1].hasBomb ) count++;
+        // bottom center
+        if ( y < this.height - 1 &&
+             this.cells[cellIndex + this.width].hasBomb ) count++;
+        // bottom right
+        if ( x < this.width - 1 && y < this.height - 1 &&
+             this.cells[cellIndex + this.width + 1].hasBomb ) count++;
+
+        return count;
+    }
+
+    gameOver () {
         this.canPlay = false;
         this.smile.sad();
         console.log('GAME OVER...');
