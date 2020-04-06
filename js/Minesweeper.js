@@ -1,4 +1,7 @@
 import Cell from './Cell.js';
+import BombCounter from './BombCounter.js';
+import Smile from './Smile.js';
+import Timer from './Timer.js';
 
 class Minesweeper {
     constructor (target, width, height, bombsPercentage) {
@@ -10,8 +13,11 @@ class Minesweeper {
         this.bombsPercentage = bombsPercentage;
         this.bombsCount = 1;
 
+        this.canPlay = true;
         this.clickCount = 0;
-
+        this.bombCounter = null;
+        this.smile = null;
+        this.timer = null;
         this.cells = [];
 
         this.init();
@@ -19,6 +25,13 @@ class Minesweeper {
 
     init() {
         this.validate();
+        this.render();
+    }
+
+    resetGame () {        
+        this.canPlay = true;
+        this.clickCount = 0;        
+        this.cells = [];
         this.render();
     }
 
@@ -57,15 +70,16 @@ class Minesweeper {
     }
 
     render() {
-        let HTML = `<div class="header">
-                        <div class="counter bombs">0${this.bombsCount}</div>
-                        <div class="smile">:)</div>
-                        <div class="counter timer">000</div>
-                    </div>
+        let HTML = `<div class="header"></div>
                     <div class="field"></div>`;
         this.DOM.classList.add('minesweeper');
         this.DOM.innerHTML = HTML;
+        this.DOMheader = this.DOM.querySelector('.header');
         this.DOMfield = this.DOM.querySelector('.field');
+
+        this.bombCounter = new BombCounter(this.DOMheader, this.bombsCount);
+        this.smile = new Smile(this.DOMheader, this);
+        this.timer = new Timer(this.DOMheader, this);
 
         for ( let i=0; i<this.width * this.height; i++ ) {
             this.cells.push ( new Cell(i, this) );
@@ -86,13 +100,39 @@ class Minesweeper {
     }
 
     checkCell( cellIndex ) {
+        if( !this.canPlay) {
+            return;
+        }
+
         console.log('cell: '+cellIndex);
         
+        //pirmas paspaudimas - generuojamos bombos
         if ( this.clickCount === 0 ) {
             this.createBombs( cellIndex );            
         }
         this.clickCount++;
+
+        //atidaromas paspaustas langelis
+        if ( this.cells[cellIndex].hasBomb ) {
+            //jei langelyje bomba
+                //game over
+                this.gameOver();
+        } else {            
+            //jei bombos nera, tai:
+                //tikriname aplinkinius langelius ir ksiaciuojame, kiek yra aplinkui bombu
+                    //jei bombu yra 0, tai
+                        //tesiame tikrinima aplinkiniuose langeliuose
+                    //jei bombu daugiau nei 0, tai
+                        //atvaizduojame langelyje bombu skaiciu
+        }
     }
+
+    gameOver (){
+        this.canPlay = false;
+        this.smile.sad();
+        console.log('GAME OVER...');
+    }
+
 }
 
 const game = new Minesweeper('#game', 10, 10, 15);
