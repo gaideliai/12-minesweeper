@@ -74,7 +74,7 @@ body * {
             }
             .minesweeper > .field > .cell.open {
                 background-color: #fff;
-                border-color: #ccc;
+                border-color: green;
             }
             .minesweeper > .field > .cell.bomb {
                 background-color: #f00;
