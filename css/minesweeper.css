@@ -28,7 +28,7 @@ body * {
         .minesweeper > .header > .counter {
             display: inline-block;
             float: left;
-            width: 60px;
+            /* width: 60px; */
             padding: 0 2px;
             background-color: #222;
             color: #f00;
@@ -41,13 +41,17 @@ body * {
             float: left;
             width: 30px;
             height: 30px;
-            margin: 0 calc(50% - 75px);
+            /* margin: 0 calc(50% - 75px); */
             line-height: 24px;
             font-size: 24px;
             text-align: center;
-            transform: rotate(90deg);
+            /* transform: rotate(90deg); */
             background-color: #ccc;
             box-shadow: 0 0 2px #777;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) rotate(90deg);
+
         }
         .minesweeper > .header > .counter.timer {
             float: right;
@@ -67,6 +71,7 @@ body * {
             text-align: center;
             font-size: 24px;
             line-height: 30px;
+            position: relative;
         }
             .minesweeper > .field > .cell:hover {
                 background-color: #bbb;
@@ -78,4 +83,15 @@ body * {
             }
             .minesweeper > .field > .cell.bomb {
                 background-color: #f00;
+            }
+            .minesweeper > .field > .cell.flag::before {
+                display: inline-block;
+                content: '';
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 10px;
+                height: 10px;
+                background-color: red;
+                border-radius: 50%;
             }

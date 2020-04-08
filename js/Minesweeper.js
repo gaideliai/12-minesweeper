@@ -32,7 +32,7 @@ class Minesweeper {
         this.canPlay = true;
         this.clickCount = 0;        
         this.cells = [];
-        this.render();        
+        this.render();       
     }
 
     validate () {
@@ -111,8 +111,6 @@ class Minesweeper {
         if( !this.canPlay) {
             return;
         }
-
-        console.log('cell: '+cellIndex);
         
         //pirmas paspaudimas - generuojamos bombos
         if ( this.clickCount === 0 ) {
@@ -131,8 +129,7 @@ class Minesweeper {
             this.cells[cellIndex].showNumber(surroundingBombs);
 
             const cx = this.cells[cellIndex].x;
-            const cy = this.cells[cellIndex].y;
-            console.log( 'Cele:', cx, cy );
+            const cy = this.cells[cellIndex].y;            
 
             if (surroundingBombs === 0) {                
                 //tesiame tikrinima aplinkiniuose langeliuose
@@ -210,8 +207,12 @@ class Minesweeper {
         this.smile.sad();
         console.log('GAME OVER...');
     }
+
+    updateBombCounter (value) {
+        this.bombCounter.update(value);
+    }
 }
 
-const game = new Minesweeper('#game', 10, 10, 10);
+const game = new Minesweeper('#game', 10, 10, 5);
 
 console.log(game);
