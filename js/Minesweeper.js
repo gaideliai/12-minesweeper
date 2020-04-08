@@ -114,7 +114,8 @@ class Minesweeper {
         
         //pirmas paspaudimas - generuojamos bombos
         if ( this.clickCount === 0 ) {
-            this.createBombs( cellIndex );            
+            this.createBombs( cellIndex );
+            this.timer.start();            
         }
         this.clickCount++;
 
@@ -147,6 +148,7 @@ class Minesweeper {
             if (this.isWin()) {
                 this.canPlay = false;
                 this.smile.win();
+                this.timer.stop();
             }            
         }
     }
@@ -205,6 +207,7 @@ class Minesweeper {
     gameOver () {
         this.canPlay = false;
         this.smile.sad();
+        this.timer.stop();
         console.log('GAME OVER...');
     }
 
